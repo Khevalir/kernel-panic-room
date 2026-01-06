@@ -775,7 +775,7 @@ const commands = {
     execute: (args) => executeClear(args)
   },
   inventory: {
-    description: "Muestra el inventario, la descripción de un item, o añade items.",
+    description: "Muestra el inventario o la descripción de un item",
     help: "Uso: inventory [?OPCION] [?ITEM]   Muestra el contenido del inventario, o de un ITEM en concreto",
     execute: (args) => executeInventory(args)
   },
