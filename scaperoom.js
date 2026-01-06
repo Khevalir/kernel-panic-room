@@ -827,7 +827,7 @@ function executeHelp(args) {
 
   outputLines([
     "",
-    "Usa './archivo para ejecutar un archivo ejecutable",
+    "Usa './archivo' para ejecutar un archivo",
     "",
   ], "command-help");
 }
