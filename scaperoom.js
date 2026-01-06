@@ -819,13 +819,17 @@ function executeHelp(args) {
     "Comandos disponibles:",
     "Usa 'comando --help' para ver más información de cada commando",
     "",
-    "Usa './archivo para ejecutar un archivo ejecutable",
-    "",
   ], "command-help");
   
   Object.entries(commands).forEach(([cmd, data]) => {
     outputLine(`\t  ${cmd}: ${data.description}`, "command-help");
   });
+
+  outputLines([
+    "",
+    "Usa './archivo para ejecutar un archivo ejecutable",
+    "",
+  ], "command-help");
 }
 
 function executeLogin(args) {
