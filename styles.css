@@ -1,0 +1,359 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Courier New", monospace;
+    overflow: hidden;
+
+    --green: #00ff41;
+}
+
+body {
+    background-color: #0a0a12;
+    color: var(--green);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-image:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(0, 40, 0, 0.5) 0%,
+            transparent 20%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(0, 40, 0, 0.5) 0%,
+            transparent 20%
+        );
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a12;
+    color: var(--green);
+    text-shadow: 0 0 15px var(--green);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeOut 1s ease-in-out forwards;
+    animation-delay: 4.5s;
+    background-image:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(0, 40, 0, 0.3) 0%,
+            transparent 20%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(0, 40, 0, 0.3) 0% /*transparent 20%*/
+        );
+}
+
+.loading-ascii {
+    font-family: monospace;
+    line-height: 1.2;
+    white-space: pre;
+    /*color: var(--green);*/
+    font-size: 16px;
+    max-width: 100%;
+}
+
+.loading-title {
+    font-size: 64px;
+    margin-bottom: 20px;
+    /*text-shadow: 0 0 10px var(--green);*/
+}
+
+.loading-status {
+    position: relative;
+    font-size: 36px;
+    overflow: visible;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        width: 0;
+        height: 10px;
+        background: var(--green);
+        color: var(--green);
+        animation: loading 4s forwards;
+    }
+}
+
+.header {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #00aa00;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 24px;
+    text-shadow: 0 0 5px var(--green);
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #00aa00;
+    margin-top: 5px;
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-value {
+    font-size: 20px;
+    color: var(--green);
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.ascii-art-container {
+    flex: 1;
+    background-color: rgba(0, 20, 0, 0.7);
+    border: 1px solid #004400;
+    padding: 10px;
+    overflow: hidden;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    container-type: inline-size;
+}
+
+.ascii-art {
+    /*font-family: monospace;*/
+    line-height: 1.2;
+    white-space: pre;
+    color: var(--green);
+    font-size: 1cqw;
+    max-width: 100%;
+}
+
+.terminal-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 10, 0, 0.8);
+    border: 1px solid #004400;
+}
+
+.terminal-header {
+    background-color: #002000;
+    padding: 8px 15px;
+    border-bottom: 1px solid #004400;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.terminal-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.terminal-status {
+    color: #00aa00;
+    font-size: 14px;
+}
+
+.terminal-output {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 1.4;
+    font-size: 18px;
+}
+
+.terminal-line {
+    opacity: 0;
+    margin-bottom: 8px;
+    animation: fadeIn 0.3s ease-in forwards;
+}
+
+.input-container {
+    display: flex;
+    padding: 10px 15px;
+    background-color: #001100;
+    border-top: 1px solid #004400;
+}
+
+.prompt {
+    color: var(--green);
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#command-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--green);
+    font-size: 18px;
+    outline: none;
+    font-family: "Courier New", monospace;
+}
+
+.command-output {
+    color: var(--green);
+}
+
+.command-prompt {
+    color: #0eac36;
+}
+
+.command-echo2 {
+    color: #0d7a28;
+}
+
+.command-echo3 {
+    color: #0a521c;
+}
+
+.command-error {
+    color: #ff4444;
+}
+
+.command-help {
+    color: #ffff00;
+}
+
+.command-special {
+    color: #ff8800;
+    /*font-weight: bold;*/
+}
+
+.inventory-item {
+    color: #ffaa00;
+}
+
+.object-item {
+    color: #00aaff;
+}
+
+.link {
+    color: #00aaff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.hint {
+    color: #888888;
+    font-style: italic;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #00aa00;
+    font-size: 14px;
+    color: #008800;
+}
+
+.typewriter {
+    overflow: hidden;
+    border-right: 2px solid var(--green);
+    white-space: nowrap;
+    /* opacity: 1; */
+    animation:
+        fadeIn 1ms ease-in forwards,
+        loading 3.5s steps(40, end) forwards,
+        blink-caret 0.75s 6 forwards;
+}
+
+.blink {
+    animation: flicker 1s infinite;
+}
+
+.flicker {
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.9;
+    }
+}
+
+@keyframes blink-caret {
+    from,
+    to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--green);
+    }
+}
+
+@keyframes loading {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: #001100;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #003300;
+    border-radius: 5px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #005500;
+}

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kernel Panic Room</title>
+        <link rel="stylesheet" href="styles.css" />
+        <!--<link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap"
+            rel="stylesheet"
+        />-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
+        <script type="module" src="scaperoom.js"></script>
+    </head>
+
+    <body>
+        <div class="loading-screen" id="loading-screen">
+            <pre class="loading-ascii">
+             .::db           .::db
+            .::d88b         .::d88b
+           .::d8888b       .::d8888b
+          .::d88!::::::::::::d888888b
+          \  Y88\_________\  Y888888P
+           \  Y8888P       \  Y8888P
+            /dbY88Pdb       /dbY88Pdb
+           /d8P_YP Y8b     /d8P_YP Y8b
+          /d8P    \ Y8b   /d8P    \ Y8b
+    .::db/d8P      \.::db/d8P      \ Y8b
+   .::d88bYP       .::d88LSP        \ Y8b
+  .::d8888b       .::d8888b`b        \ Y8b:db
+ .::d88!::::::::::::d888888b`b        \ YPd88b
+ \  Y88\_________\  Y888888Pd8b       .::d8888b
+  \  Y8888P       \  Y8888P!::::::::::::d888888b
+   \  Y88Pdb       \  Y88Pdb_________\  Y888888P
+    \__YP Y8b       \__YP Y8b`P       \  Y8888P
+         \ Y8b         /d\ Y8b         /dbY88P
+          \ Y8b       /d8P\ Y8b       /d8P_YP
+           \ Y8b     /d8P  \ Y8b     /d8P
+            \ Y8b:db/d8P    \ Y8b:db/d8P
+             \ YPd88bYP      \ YPd88bYP
+             .::d8888b       .::d8888b
+            .::d88!::::::::::::d888888b
+            \  Y88\_________\  Y888888P
+             \  Y8888P       \  Y8888P
+              \  Y88P         \  Y88P
+               \__YP           \__YP
+            </pre>
+            <div class="loading-title">HONEYDEW_OS</div>
+            <div class="loading-status">CARGANDO SISTEMA OPERATIVO...</div>
+        </div>
+
+        <div class="header">
+            <div>
+                <div class="title">KERNEL PANIC ROOM</div>
+                <div class="subtitle">
+                    Aventura de Aprendizaje de la Terminal v1.0
+                </div>
+            </div>
+            <div class="stats">
+                <div class="stat-item command-error" id="connection-status">
+                    OFFLINE
+                </div>
+                <div class="stat-item">
+                    <div>RETOS</div>
+                    <div class="stat-value" id="puzzle-counter">0/0</div>
+                </div>
+                <!-- <div class="stat-item">
+                    <div>PISTAS</div>
+                    <div class="stat-value" id="hints-used">0</div>
+                </div> -->
+                <div class="stat-item">
+                    <div>TIEMPO</div>
+                    <div class="stat-value" id="remaining-time">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-container">
+            <div class="ascii-art-container" id="ascii-art-container">
+                <pre class="ascii-art flicker" id="ascii-art" style="font-size: 10px;">
+ █████   ████ ██████████ ███████████   ██████   █████ ██████████ █████
+░░███   ███░ ░░███░░░░░█░░███░░░░░███ ░░██████ ░░███ ░░███░░░░░█░░███
+ ░███  ███    ░███  █ ░  ░███    ░███  ░███░███ ░███  ░███  █ ░  ░███
+ ░███████     ░██████    ░██████████   ░███░░███░███  ░██████    ░███
+ ░███░░███    ░███░░█    ░███░░░░░███  ░███ ░░██████  ░███░░█    ░███
+ ░███ ░░███   ░███ ░   █ ░███    ░███  ░███  ░░█████  ░███ ░   █ ░███      █
+ █████ ░░████ ██████████ █████   █████ █████  ░░█████ ██████████ ███████████
+░░░░░   ░░░░ ░░░░░░░░░░ ░░░░░   ░░░░░ ░░░░░    ░░░░░ ░░░░░░░░░░ ░░░░░░░░░░░
+       ███████████    █████████   ██████   █████ █████   █████████
+      ░░███░░░░░███  ███░░░░░███ ░░██████ ░░███ ░░███   ███░░░░░███
+       ░███    ░███ ░███    ░███  ░███░███ ░███  ░███  ███     ░░░
+       ░██████████  ░███████████  ░███░░███░███  ░███ ░███
+       ░███░░░░░░   ░███░░░░░███  ░███ ░░██████  ░███ ░███
+       ░███         ░███    ░███  ░███  ░░█████  ░███ ░░███     ███
+       █████        █████   █████ █████  ░░█████ █████ ░░█████████
+      ░░░░░        ░░░░░   ░░░░░ ░░░░░    ░░░░░ ░░░░░   ░░░░░░░░░
+       ███████████      ███████       ███████    ██████   ██████
+      ░░███░░░░░███   ███░░░░░███   ███░░░░░███ ░░██████ ██████
+       ░███    ░███  ███     ░░███ ███     ░░███ ░███░█████░███
+       ░██████████  ░███      ░███░███      ░███ ░███░░███ ░███
+       ░███░░░░░███ ░███      ░███░███      ░███ ░███ ░░░  ░███
+       ░███    ░███ ░░███     ███ ░░███     ███  ░███      ░███
+       █████   █████ ░░░███████░   ░░░███████░   █████     █████
+      ░░░░░   ░░░░░    ░░░░░░░       ░░░░░░░    ░░░░░     ░░░░░
+                </pre>
+            </div>
+
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="terminal-title">HONEYDEW OPERATING SYSTEM</div>
+                    <div class="terminal-status">
+                        COPYRIGHT 2075-2077 XEPHOS INDUSTRIES
+                    </div>
+                </div>
+
+                <div class="terminal-output scrollbar" id="terminal-output">
+                    <div
+                        class="terminal-line typewriter"
+                        style="animation-delay: 5s"
+                    >
+                        Inicializando Terminal Scaperoom v1.0.
+                    </div>
+                    <div
+                        class="terminal-line typewriter"
+                        style="animation-delay: 5.2s"
+                    >
+                        Cargando la interfaz del sistema.
+                    </div>
+                    <div
+                        class="terminal-line typewriter"
+                        style="animation-delay: 5.4s"
+                    >
+                        Sistema listo.
+                    </div>
+                    <div class="terminal-line" style="animation-delay: 7s">
+                        ========================================
+                    </div>
+                    <div
+                        class="terminal-line command-special"
+                        style="animation-delay: 7.5s"
+                    >
+                        TE DAMOS LA BIENVENIDA A KERNEL PANIC ROOM
+                    </div>
+                    <div
+                        class="terminal-line command-special"
+                        style="animation-delay: 7.5s"
+                    >
+                        Por favor, usa el comando 'login' con tu cuenta de escapp para unitrte
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <div class="prompt" id="room-display">C:\Scaperoom></div>
+                    <input
+                        type="text"
+                        id="command-input"
+                        placeholder="Escribe tu comando aquí..."
+                        autocomplete="off"
+                        autofocus
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>
+                HONEYDEW TERMINAL v2.1 - Usa 'help' para obtener información de
+                los comandos | 'clear' para limpiar la pantalla | 'inventory'
+                para revisar tus items
+            </div>
+        </div>
+    </body>
+</html>
