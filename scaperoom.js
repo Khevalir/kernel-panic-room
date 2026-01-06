@@ -311,8 +311,12 @@ function executeProgram(programName, args) {
     return;
   }
   
-  gameState.executingProgram = true;
-  files[programName].run();
+  if (files[programName].run) {
+    files[programName].run();
+    gameState.executingProgram = true;
+  } else {
+    outputLine(`El archivo ${programName} no es un ejecutable.`,"command-error");
+  }
 }
 
 // ==================== SOCKET COMMUNICATION ====================
